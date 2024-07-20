@@ -247,10 +247,12 @@ resource "kubernetes_deployment" "main" {
           run_as_user = 1000
           fs_group    = 1000
         }
-
+        image_pull_secrets {
+          name = "regcred"
+        }
         container {
           name              = "jumpbox"
-          image             = "registry.sololab.one/solo-laboratories/coder-environments/jumpbox-to-k8s/jumpbox:0.1.0"
+          image             = "ghcr.io/markbrown87/k8s-jumpbox:1.0.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
