@@ -237,10 +237,12 @@ resource "kubernetes_deployment" "main" {
           run_as_user = 1000
           fs_group    = 1000
         }
-
+        image_pull_secrets {
+          name = "regcred"
+        }
         container {
           name              = "cpp-builder"
-          image             = "registry.sololab.one/solo-laboratories/coder-environments/go-lang/go-lang:1.0.0"
+          image             = "ghcr.io/markbrown87/golang-env:1.0.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
