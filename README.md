@@ -16,3 +16,7 @@ Templates for Coder deployed in or using Kubernetes.
 ## Dockerfiles
 
 The docker files are the custom files for the templates above. Mostly they install the tools I required for each workspace BUT they also changed the user to 'markus'. Make sure to change that OR wrap in dockerfile variable that is passed in during building. Add any tools you need but provide those changes logically to this repository PLZ AND THNKS!
+
+## Notes
+
+If you're using Coder in Kubernetes AND want to use a private registry then I suggest you [follow this guide](https://coder.com/docs/guides/image-pull-secret). I used this to pull from my private ghcr.io registry for all the images.
