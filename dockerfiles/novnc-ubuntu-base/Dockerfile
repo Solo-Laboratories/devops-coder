@@ -37,3 +37,5 @@ RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}
 USER ${USER}
 WORKDIR /home/${USER}
+
+ENTRYPOINT["/coder/start_vnc"]
