@@ -5,41 +5,21 @@
 #
 
 # the base image 
-FROM codercom/enterprise-base:ubuntu
+FROM marktmilligan/vnc:coder-v2
 
 USER root
 
 # Install baseline packages
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
-    xfce4 \
-    xfce4-goodies \
-    xfce4-terminal \
-    xfce4-screensaver \
-    ubuntu-mate-desktop \
-    firefox \
-    tigervnc-standalone-server \
-    sudo \
-    supervisor
-
-RUN update-alternatives --config x-terminal-emulator
-
-# configure script to start supervisord
-COPY ["configure", "/coder/configure"]
-RUN chmod +x /coder/configure
-
-# copy supervisord config
-RUN mkdir -p /var/log/supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+    ubuntu-mate-desktop 
 
 COPY xstartup /coder/xstartup
 
 # Modify to include my user
-# ARG USER=markus
-# RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
-# 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
-# 	&& chmod 0440 /etc/sudoers.d/${USER}
-# USER ${USER}
-# WORKDIR /home/${USER}
-
-# ENTRYPOINT ["/coder/start_vnc"]
+ARG USER=markus
+RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
+	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
+	&& chmod 0440 /etc/sudoers.d/${USER}
+USER ${USER}
+WORKDIR /home/${USER}
