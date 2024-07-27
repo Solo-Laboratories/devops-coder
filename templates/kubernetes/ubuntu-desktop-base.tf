@@ -259,7 +259,9 @@ resource "kubernetes_deployment" "main" {
           run_as_user = 1000
           fs_group    = 1000
         }
-
+	image_pull_secrets {
+	  name = "regcred"
+	}
         container {
           name              = "ubuntu-mate"
           image             = "ghcr.io/markbrown87/ubuntu-mate-base:0.1.0"
