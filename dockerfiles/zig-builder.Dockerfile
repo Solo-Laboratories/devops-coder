@@ -1,11 +1,12 @@
-FROM alpine:3.20
+FROM ubuntu:22.04
 
-RUN apk update && apk upgrade && apk add --no-cache zig curl git
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends git
 
-# Set user and group
-RUN     apk add doas; \
-        adduser markus -G wheel; \
-        echo 'permit nopass :wheel as root' > /etc/doas.d/doas.conf
+RUN snap install zig --classic --beta
 
-# Switch to user
-USER markus
+ARG USER=markus
+RUN useradd --groups sudo --shell /bin/bash ${USER} \
+	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
+	&& chmod 0440 /etc/sudoers.d/${USER}
+USER ${USER}
+WORKDIR /home/${USER}
