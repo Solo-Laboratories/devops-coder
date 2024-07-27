@@ -15,7 +15,7 @@ RUN apt-get update && \
     ubuntu-mate-desktop \
     firefox \
     tigervnc-standalone-server \
-    sudo
+    sudo \
     supervisor
 
 RUN update-alternatives --config x-terminal-emulator
