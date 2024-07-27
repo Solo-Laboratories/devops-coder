@@ -39,4 +39,4 @@ COPY supervisor.conf /etc/supervisor/conf.d/
 COPY startup.sh $HOME
 
 EXPOSE 6080 5901 4040
-CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
+CMD ["/bin/bash", "/home/markus/startup.sh"]
