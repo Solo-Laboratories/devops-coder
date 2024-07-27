@@ -38,4 +38,4 @@ RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
 USER ${USER}
 WORKDIR /home/${USER}
 
-ENTRYPOINT["/coder/start_vnc"]
+ENTRYPOINT ["/coder/start_vnc"]
