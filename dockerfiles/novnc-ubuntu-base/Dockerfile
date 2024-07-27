@@ -190,7 +190,7 @@ USER root
 # Install baseline packages
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
-    ubuntu-mate-desktop 
+    mate-desktop-environment-extras
 
 COPY xstartup /coder/xstartup
 
