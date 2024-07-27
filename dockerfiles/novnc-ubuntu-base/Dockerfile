@@ -18,7 +18,7 @@ RUN apt-get update && \
     sudo \
     supervisor
 
-#RUN update-alternatives --config x-terminal-emulator
+RUN update-alternatives --config x-terminal-emulator
 
 # configure script to start supervisord
 COPY ["configure", "/coder/configure"]
@@ -32,7 +32,7 @@ COPY xstartup /coder/xstartup
 
 # Modify to include my user
 ARG USER=markus
-RUN useradd --groups sudo --shell /bin/bash ${USER} \
+RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}
 USER ${USER}
