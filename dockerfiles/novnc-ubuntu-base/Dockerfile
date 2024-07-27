@@ -31,11 +31,11 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY xstartup /coder/xstartup
 
 # Modify to include my user
-ARG USER=markus
-RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
-	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
-	&& chmod 0440 /etc/sudoers.d/${USER}
-USER ${USER}
-WORKDIR /home/${USER}
+# ARG USER=markus
+# RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
+# 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
+# 	&& chmod 0440 /etc/sudoers.d/${USER}
+# USER ${USER}
+# WORKDIR /home/${USER}
 
-ENTRYPOINT ["/coder/start_vnc"]
+# ENTRYPOINT ["/coder/start_vnc"]
