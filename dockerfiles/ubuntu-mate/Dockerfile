@@ -4,11 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV USER=markus
 ENV HOME=/home/$USER
 
-
-RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
-	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
-	&& chmod 0440 /etc/sudoers.d/${USER}
-
 # Install MATE and dependency component.
 RUN apt-get update \
     && apt-get install -y \
@@ -21,6 +16,10 @@ RUN apt-get update \
         pwgen \
     && apt-get autoclean \
     && apt-get autoremove 
+
+RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
+	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
+	&& chmod 0440 /etc/sudoers.d/${USER}
 
 # Clone noVNC.
 RUN git clone https://github.com/novnc/noVNC.git $HOME/noVNC
