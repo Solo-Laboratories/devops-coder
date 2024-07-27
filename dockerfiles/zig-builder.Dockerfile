@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y --no-install-recommends git wget
+RUN apt-get update && apt-get install -y --no-install-recommends git wget sudo ca-certificates
 
 RUN wget https://ziglang.org/builds/zig-linux-x86_64-0.14.0-dev.620+eab934814.tar.xz \
     && tar xvf zig-linux-x86_64-0.14.0-dev.620+eab934814.tar.xz \
