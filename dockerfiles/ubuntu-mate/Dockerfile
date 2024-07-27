@@ -8,8 +8,9 @@ ENV HOME=/home/$USER
 RUN apt-get update \
     && apt-get install -y \
         tightvncserver \
-        mate-core mate-desktop-environment mate-notification-daemon \
+        mate-desktop-environment-extras \
         supervisor \
+        firefox \
         net-tools \
         curl \
         git \
