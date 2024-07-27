@@ -12,6 +12,10 @@ USER root
 # Install baseline packages
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get install --yes \
+    xfce4 \
+    xfce4-goodies \
+    xfce4-terminal \
+    xfce4-screensaver \
     ubuntu-mate-desktop \
     firefox \
     tigervnc-standalone-server \
