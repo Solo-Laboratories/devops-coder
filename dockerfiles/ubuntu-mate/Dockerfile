@@ -8,7 +8,7 @@ ENV HOME=/home/$USER
 RUN apt-get update \
     && apt-get install -y \
         tightvncserver \
-        mate-desktop-environment-extras \
+        ubuntu-mate-desktop \
         supervisor \
         firefox \
         net-tools \
