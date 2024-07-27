@@ -245,7 +245,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "zig-builder"
-          image             = "ghcr.io/markbrown87/zig-builder:1.0.0"
+          image             = "ghcr.io/markbrown87/zig-builder:1.1.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
