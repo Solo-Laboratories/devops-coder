@@ -16,6 +16,26 @@ RUN apt-get update \
         git \
         pwgen \
         sudo \
+        wget \
+        unzip \
+        zsh \
+        xorg \
+        x11-apps \
+        dbus-x11 \
+        xterm \
+        python-numpy \
+        fonts-lyx \
+        libxtst6 \
+        libxv1 \
+        libglu1-mesa \
+        libc6-dev \
+        libglu1 \
+        libsm6 \
+        libxv1 \
+        x11-xkb-utils \
+        xauth \
+        xfonts-base \
+        xkb-data \
     && apt-get autoclean \
     && apt-get autoremove 
 
@@ -29,15 +49,10 @@ RUN git clone https://github.com/novnc/noVNC.git $HOME/noVNC
 # Clone websockify for noVNC
 RUN git clone https://github.com/kanaka/websockify $HOME/noVNC/utils/websockify
 
-# # Download ngrok.
-# ADD https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip $HOME/ngrok/ngrok.zip
-# RUN unzip -o $HOME/ngrok/ngrok.zip -d $HOME/ngrok && rm $HOME/ngrok/ngrok.zip
-
 # Copy supervisor config.
 COPY supervisor.conf /etc/supervisor/conf.d/
 
 # Copy startup script.
 COPY startup.sh $HOME
 
-EXPOSE 6080 5901 4040
 CMD ["/bin/bash", "/home/markus/startup.sh"]
