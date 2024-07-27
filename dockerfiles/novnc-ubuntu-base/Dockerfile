@@ -65,9 +65,9 @@ USER 0
 
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
 ARG DEBIAN_FRONTEND="noninteractive"
-ARG TURBOVNC_VERSION=3.1
-ARG VIRTUALGL_VERSION=3.1
-ARG LIBJPEG_VERSION=3.0.1
+ARG TURBOVNC_VERSION=2.2.5
+ARG VIRTUALGL_VERSION=2.6.4
+ARG LIBJPEG_VERSION=2.0.5
 
 RUN echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections; \
     echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections
