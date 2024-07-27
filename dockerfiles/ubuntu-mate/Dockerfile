@@ -14,6 +14,7 @@ RUN apt-get update \
         curl \
         git \
         pwgen \
+        sudo \
     && apt-get autoclean \
     && apt-get autoremove 
 
