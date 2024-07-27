@@ -32,7 +32,7 @@ COPY xstartup /coder/xstartup
 
 # Modify to include my user
 ARG USER=markus
-RUN useradd --groups sudo --no-create-home --shell /bin/bash ${USER} \
+RUN useradd --groups sudo --shell /bin/bash ${USER} \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}
 USER ${USER}
