@@ -108,7 +108,7 @@ ARG HOME=/home/markus
 ARG VNC_ROOT_DIR=/opt/vnc
 
 RUN cd /tmp && \
-    curl -fsSL -O https://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_arm64.deb \
+    curl -fsSL -O https://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_amm64.deb \
     -O https://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb \
     -O https://downloads.sourceforge.net/project/virtualgl/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb \
     && dpkg -i *.deb \
