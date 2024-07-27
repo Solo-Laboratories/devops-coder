@@ -81,7 +81,6 @@ RUN apt-get update && apt-get install -y \
   x11-apps \
   dbus-x11 \
   xterm \
-  python-numpy \
   firefox \
   fonts-lyx \
   libxtst6 \
@@ -96,6 +95,8 @@ RUN apt-get update && apt-get install -y \
   xfonts-base \
   xkb-data \
   ubuntu-mate-desktop 
+
+RUN pip3 install numpy
 
 # Install quality of life packages.
 RUN yes | unminimize
