@@ -31,8 +31,7 @@ RUN mkdir /home/$USER/.vnc && \
     chmod 0600 /home/$USER/.vnc/passwd && \
     chown -R $USER:$USER /home/$USER/.vnc
 
-RUN cp -f /xstartup /etc/xrdp/startwm.sh && \
-    cp -f /xstartup /home/$USER/.vnc/xstartup
+RUN cp -f /xstartup /home/$USER/.vnc/xstartup
 
 RUN echo "#!/bin/sh\n\
 sudo -u $USER -g $USER -- vncserver -rfbport 5902 -geometry 1920x1080 -depth 24 -verbose -localhost no -autokill no" > /startvnc && chmod +x /startvnc
