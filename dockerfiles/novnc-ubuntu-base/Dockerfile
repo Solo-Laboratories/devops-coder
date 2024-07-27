@@ -194,10 +194,10 @@ RUN apt-get update && \
 
 COPY xstartup /coder/xstartup
 
-# Modify to include my user
-ARG USER=markus
-RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
-	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
-	&& chmod 0440 /etc/sudoers.d/${USER}
-USER ${USER}
-WORKDIR /home/${USER}
+# # Modify to include my user
+# ARG USER=markus
+# RUN useradd --create-home --groups sudo --shell /bin/bash ${USER} \
+# 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
+# 	&& chmod 0440 /etc/sudoers.d/${USER}
+# USER ${USER}
+# WORKDIR /home/${USER}
