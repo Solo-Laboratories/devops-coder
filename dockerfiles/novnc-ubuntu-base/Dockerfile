@@ -18,7 +18,7 @@ RUN apt-get update && \
     sudo \
     supervisor
 
-RUN update-alternatives --config x-terminal-emulator
+#RUN update-alternatives --config x-terminal-emulator
 
 # configure script to start supervisord
 COPY ["configure", "/coder/configure"]
