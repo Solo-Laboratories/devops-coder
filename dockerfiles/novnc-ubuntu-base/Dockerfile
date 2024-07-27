@@ -107,6 +107,8 @@ RUN locale-gen en_US.UTF-8
 ARG HOME=/home/markus
 ARG VNC_ROOT_DIR=/opt/vnc
 
+RUN apt-get install libegl1-mesa 
+
 RUN cd /tmp && \
     curl -fsSL -O https://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_amd64.deb \
     -O https://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb \
