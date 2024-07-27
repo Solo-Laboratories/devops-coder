@@ -1,6 +1,6 @@
 FROM alpine:3.20
 
-RUN apk update && apk upgrade -y && apk add --no-cache zig curl git
+RUN apk update && apk upgrade && apk add --no-cache zig curl git
 
 # Set user and group
 RUN     apk add doas; \
