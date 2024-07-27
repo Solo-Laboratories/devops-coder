@@ -8,4 +8,4 @@ RUN     apk add doas; \
         echo 'permit nopass :wheel as root' > /etc/doas.d/doas.conf
 
 # Switch to user
-USER ${uid}:${gid}
+USER markus
