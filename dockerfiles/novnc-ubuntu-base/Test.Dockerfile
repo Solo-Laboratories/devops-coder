@@ -1,11 +1,11 @@
 #FROM ubuntu:jammy-20230425
 FROM ubuntu:22.04
 
-RUN apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y mate-desktop-environment-extras locales sudo
-
 # RUN apt update && \
-#     DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-mate-desktop locales sudo
+#     DEBIAN_FRONTEND=noninteractive apt install -y mate-desktop-environment-extras locales sudo
+
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-mate-desktop locales sudo
 
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y tigervnc-standalone-server && \
@@ -36,6 +36,9 @@ RUN cp -f /xstartup /home/$USER/.vnc/xstartup
 RUN echo "#!/bin/sh\n\
 sudo -u $USER -g $USER -- vncserver -rfbport 5902 -geometry 1920x1080 -depth 24 -verbose -localhost no -autokill no" > /startvnc && chmod +x /startvnc
 
-EXPOSE 5902
+ENV PULSE_SERVER=/tmp/PulseServer
+ENV WAYLAND_DISPLAY=wayland-0
+ENV XDG_RUNTIME_DIR=/tmp/runtime-dir/
+ENV DISPLAY=:0
 
-CMD service dbus start; /usr/lib/systemd/systemd-logind & service xrdp start; /startvnc; bash
+ENTRYPOINT ["/startvnc"]
