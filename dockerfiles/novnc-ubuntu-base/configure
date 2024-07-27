@@ -1,0 +1,14 @@
+#!/bin/bash
+
+mkdir -p /home/markus/.vnc
+
+# copy xstartup
+cp /coder/xstartup /home/markus/.vnc/xstartup
+chmod u+x /home/markus/.vnc/xstartup
+
+# set vnc password
+# echo "password" | vncpasswd -f > /home/markus/.vnc/passwd
+
+# start supervisord and TigerVNC
+echo 'start supervisord and the TigerVNC server'
+sudo /usr/bin/supervisord
