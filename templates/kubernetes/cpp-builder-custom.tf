@@ -197,10 +197,41 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "conan" {
+  metadata {
+    name      = "coder-${lower(data.coder_workspace_owner.me.name)}-conan-cache"
+    namespace = "coder"
+    labels = {
+      "app.kubernetes.io/name"     = "coder-pvc"
+      "app.kubernetes.io/instance" = "coder-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      //Coder-specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+  wait_until_bound = false
+  spec {
+    access_modes = ["ReadWriteMany"]
+    resources {
+      requests = {
+        storage = "20Gi"
+      }
+    }
+  }
+}
+
 resource "kubernetes_deployment" "main" {
   count = data.coder_workspace.me.start_count
   depends_on = [
-    kubernetes_persistent_volume_claim.home
+    kubernetes_persistent_volume_claim.home,
+    kubernetes_persistent_volume_claim.conan
   ]
   wait_for_rollout = false
   metadata {
@@ -273,12 +304,25 @@ resource "kubernetes_deployment" "main" {
             name       = "home"
             read_only  = false
           }
+          volume_mount {
+            mount_path = "/home/markus/.conan2"
+            name       = "conan"
+            read_only  = false
+          }
         }
 
         volume {
           name = "home"
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
+            read_only  = false
+          }
+        }
+
+        volume {
+          name = "conan"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.conan.metadata.0.name
             read_only  = false
           }
         }
