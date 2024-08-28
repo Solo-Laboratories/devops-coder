@@ -9,6 +9,29 @@ terraform {
 provider "coder" {
 }
 
+data "coder_parameter" "shared-conan" {
+  name         = "shared-conan-cache"
+  display_name = "Shared Conan Cache"
+  description  = "Shared cache other workspaces can use to keep space usage down."
+  default      = false
+  mutable      = false
+  icon         = "https://simpleicons.org/icons/conan.svg"
+}
+
+data "coder_parameter" "shared-conan-size" {
+  name         = "shared-conan-cache-size"
+  display_name = "Shared Conan Cache Size"
+  description  = "The size of the shared container in GB. Make sure you know the size before hand!"
+  default      = "20"
+  type         = "number"
+  mutable      = false
+  icon         = "/icon/container.svg"
+  validation {
+    min = 1
+    max = 99999
+  }
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"

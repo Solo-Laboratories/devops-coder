@@ -89,14 +89,14 @@ resource "coder_agent" "main" {
   startup_script = <<-EOT
     set -e
 
-    # Install/Update k9s
-    curl -sS https://webinstall.dev/k9s | bash
-
     # Check that .bashrc is present
     if [ ! -f ~/.bashrc ]; then
       echo ".bashrc is missing. Copying from system files..."
       cp /etc/skel/.bashrc ~/
     fi
+
+    # Install/Update k9s
+    curl -sS https://webinstall.dev/k9s | bash
 
     # install and start code-server
     curl -fsSL https://code-server.dev/install.sh | sh -s -- --method=standalone --prefix=/tmp/code-server --version 4.11.0
