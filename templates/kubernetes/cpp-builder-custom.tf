@@ -279,7 +279,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "cpp-builder"
-          image             = "docker.io/${data.coder_parameter.image.value}"
+          image             = "docker.io/${data.coder_parameter.image.value}-${data.coder_parameter.user.value}"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
