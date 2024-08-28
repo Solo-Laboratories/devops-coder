@@ -44,6 +44,20 @@ data "coder_parameter" "image" {
   }  
 }
 
+data "coder_parameter" "shared-conan-size" {
+  name         = "shared-conan-cache-size"
+  display_name = "Shared Conan Cache Size"
+  description  = "The size of the shared container in GB. Make sure you know the size before hand!"
+  default      = "20"
+  type         = "number"
+  mutable      = false
+  icon         = "https://simpleicons.org/icons/conan.svg"
+  validation {
+    min = 1
+    max = 99999
+  }
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -228,6 +242,36 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "conan" {
+  metadata {
+    name      = "coder-${lower(data.coder_workspace_owner.me.name)}-conan-cache"
+    namespace = "coder"
+    labels = {
+      "app.kubernetes.io/name"     = "coder-pvc"
+      "app.kubernetes.io/instance" = "coder-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      //Coder-specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+  wait_until_bound = false
+  spec {
+    access_modes = ["ReadWriteMany"]
+    resources {
+      requests = {
+        storage = "${data.coder_parameter.shared-conan-size.value}Gi"
+      }
+    }
+  }
+}
+
 resource "kubernetes_deployment" "main" {
   count = data.coder_workspace.me.start_count
   depends_on = [
@@ -305,12 +349,25 @@ resource "kubernetes_deployment" "main" {
             name       = "home"
             read_only  = false
           }
+          volume_mount {
+            mount_path = "/home/${data.coder_parameter.user.value}/.conan2"
+            name       = "conan"
+            read_only  = false
+          }
         }
 
         volume {
           name = "home"
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
+            read_only  = false
+          }
+        }
+
+        volume {
+          name = "conan"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.conan.metadata.0.name
             read_only  = false
           }
         }
