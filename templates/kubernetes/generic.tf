@@ -34,7 +34,7 @@ data "coder_parameter" "image" {
   name        = "Container Image"
   type        = "string"
   description = "What container image do you want?"
-  mutable     = true
+  mutable     = false
   default     = "sololaboratories/cpp-language-builder:1.0.0"
   icon        = "/icon/container.svg"
 
@@ -121,7 +121,7 @@ resource "coder_agent" "main" {
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
 
     # Executes Coder server startup
-    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.92.2
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.11.0 
   EOT
 
   # The following metadata blocks are optional. They are used to display

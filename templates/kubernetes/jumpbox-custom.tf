@@ -89,18 +89,14 @@ resource "coder_agent" "main" {
   startup_script = <<-EOT
     set -e
 
-    # Check that .bashrc is present
-    if [ ! -f ~/.bashrc ]; then
-      echo ".bashrc is missing. Copying from system files..."
-      cp /etc/skel/.bashrc ~/
-    fi
+    # Executes Bashrc check script
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
 
-    # Install/Update k9s
-    curl -sS https://webinstall.dev/k9s | bash
+    # Executes k9s installation
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/k9s.sh | sh -
 
-    # install and start code-server
-    curl -fsSL https://code-server.dev/install.sh | sh -s -- --method=standalone --prefix=/tmp/code-server --version 4.11.0
-    /tmp/code-server/bin/code-server --auth none --port 13337 >/tmp/code-server.log 2>&1 &
+    # Executes Coder server startup
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.92.2
   EOT
 
   # The following metadata blocks are optional. They are used to display
@@ -258,7 +254,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "jumpbox"
-          image             = "ghcr.io/markbrown87/k8s-jumpbox:1.0.0"
+          image             = "docker.io/sololaboratories/k8s-jumbox:1.0.0-markus"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
