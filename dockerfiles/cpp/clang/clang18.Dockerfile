@@ -7,5 +7,5 @@ RUN apt update \
 && apt autoremove -y \
 && rm -rf /var/lib/apt/lists/* 
 
-USER ${USER}
-WORKDIR /home/${USER}
+USER coder
+WORKDIR /home/coder
