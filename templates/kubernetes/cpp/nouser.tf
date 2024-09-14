@@ -9,38 +9,17 @@ terraform {
 provider "coder" {
 }
 
-data "coder_parameter" "user" {
-  name        = "Container User"
-  type        = "string"
-  description = "Select your user!"
-  mutable     = false
-  default     = "coder"
-
-  option {
-    name = "Markus"
-    value = "markus"
-  }  
-  option {
-    name = "Chris"
-    value = "chris"
-  }
-  option {
-    name = "Coder"
-    value = "coder"
-  }    
-}
-
 data "coder_parameter" "image" {
   name        = "Container Image"
   type        = "string"
   description = "What container image do you want?"
   mutable     = true
-  default     = "sololaboratories/cpp-language-builder:1.0.0"
+  default     = "sololaboratories/cpp:clang18-nouser"
   icon        = "/icon/container.svg"
 
   option {
-    name = "Clang 13"
-    value = "sololaboratories/cpp-language-builder:1.0.0"
+    name = "Clang 18"
+    value = "sololaboratories/cpp:clang18-nouser"
   }  
 }
 
@@ -117,6 +96,9 @@ resource "coder_agent" "main" {
   startup_script = <<-EOT
     set -e
 
+    # Create user
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/make-user.sh | sh - -- ${data.coder_workspace_owner.me.name}
+
     # Executes Bashrc check script
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
 
@@ -187,7 +169,7 @@ resource "coder_app" "code-server" {
   slug         = "code-server"
   display_name = "code-server"
   icon         = "/icon/code.svg"
-  url          = "http://localhost:13337?folder=/home/${data.coder_parameter.user.value}"
+  url          = "http://localhost:13337?folder=/home/${data.coder_workspace_owner.me.name}"
   subdomain    = false
   share        = "owner"
 
@@ -278,8 +260,8 @@ resource "kubernetes_deployment" "main" {
           name = "regcred"
         }
         container {
-          name              = "cpp-builder"
-          image             = "docker.io/${data.coder_parameter.image.value}-${data.coder_parameter.user.value}"
+          name              = "cpp-nouser"
+          image             = "docker.io/${data.coder_parameter.image.value}"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
@@ -300,7 +282,7 @@ resource "kubernetes_deployment" "main" {
             }
           }
           volume_mount {
-            mount_path = "/home/${data.coder_parameter.user.value}"
+            mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
             read_only  = false
           }
