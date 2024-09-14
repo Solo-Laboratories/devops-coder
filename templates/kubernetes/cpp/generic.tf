@@ -14,12 +14,12 @@ data "coder_parameter" "image" {
   type        = "string"
   description = "What container image do you want?"
   mutable     = true
-  default     = "sololaboratories/cpp:clang18-nouser"
+  default     = "sololaboratories/cpp:clang18"
   icon        = "/icon/container.svg"
 
   option {
     name = "Clang 18"
-    value = "sololaboratories/cpp:clang18-nouser"
+    value = "sololaboratories/cpp:clang18"
   }  
 }
 
@@ -96,9 +96,6 @@ resource "coder_agent" "main" {
   startup_script = <<-EOT
     set -e
 
-    # Create user
-    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/make-user.sh | sh - -- ${data.coder_workspace_owner.me.name}
-
     # Executes Bashrc check script
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
 
@@ -169,7 +166,7 @@ resource "coder_app" "code-server" {
   slug         = "code-server"
   display_name = "code-server"
   icon         = "/icon/code.svg"
-  url          = "http://localhost:13337?folder=/home/${data.coder_workspace_owner.me.name}"
+  url          = "http://localhost:13337?folder=/home/coder"
   subdomain    = false
   share        = "owner"
 
@@ -282,7 +279,7 @@ resource "kubernetes_deployment" "main" {
             }
           }
           volume_mount {
-            mount_path = "/home/${data.coder_workspace_owner.me.name}"
+            mount_path = "/home/coder"
             name       = "home"
             read_only  = false
           }
