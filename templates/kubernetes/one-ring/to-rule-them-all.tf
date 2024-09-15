@@ -16,6 +16,7 @@ data "coder_parameter" "image" {
   mutable     = true
   default     = "sololaboratories/base:debian"
   icon        = "/icon/container.svg"
+  order       = 1
 
   option {
     name = "Debian Base"
@@ -41,6 +42,7 @@ data "coder_parameter" "k9s" {
   description = "Install K9s to interface with Kubernetes?"
   mutable     = false
   default     = false
+  order       = 2
 }
 
 data "coder_parameter" "coder" {
@@ -49,6 +51,7 @@ data "coder_parameter" "coder" {
   description = "Install Coder CLI to interface with your Coder Instance?"
   mutable     = false
   default     = false
+  order       = 3
 }
 
 data "coder_parameter" "cpu" {
@@ -58,6 +61,7 @@ data "coder_parameter" "cpu" {
   default      = "2"
   icon         = "/icon/memory.svg"
   mutable      = true
+  order       = 4
   option {
     name  = "2 Cores"
     value = "2"
@@ -83,6 +87,7 @@ data "coder_parameter" "memory" {
   default      = "2"
   icon         = "/icon/memory.svg"
   mutable      = true
+  order       = 5
   option {
     name  = "2 GB"
     value = "2"
@@ -109,6 +114,7 @@ data "coder_parameter" "home_disk_size" {
   type         = "number"
   icon         = "/emojis/1f4be.png"
   mutable      = false
+  order       = 6
   validation {
     min = 1
     max = 99999
