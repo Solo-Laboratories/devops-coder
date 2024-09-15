@@ -254,7 +254,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "jumpbox"
-          image             = "docker.io/sololaboratories/tools/k8s:jumpbox"
+          image             = "docker.io/sololaboratories/k8s:jumpbox"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
