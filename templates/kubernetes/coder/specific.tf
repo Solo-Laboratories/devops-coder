@@ -9,20 +9,6 @@ terraform {
 provider "coder" {
 }
 
-data "coder_parameter" "image" {
-  name        = "Container Image"
-  type        = "string"
-  description = "What container image do you want?"
-  mutable     = true
-  default     = "sololaboratories/cpp:clang18"
-  icon        = "/icon/container.svg"
-
-  option {
-    name = "Clang 18"
-    value = "sololaboratories/cpp:clang18"
-  }  
-}
-
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -95,6 +81,9 @@ resource "coder_agent" "main" {
   arch           = "amd64"
   startup_script = <<-EOT
     set -e
+
+    # Executes Coder install script 
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
 
     # Executes Bashrc check script
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
@@ -258,7 +247,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "cpp-nouser"
-          image             = "docker.io/${data.coder_parameter.image.value}"
+          image             = "docker.io/sololaboratories/base:debian"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
