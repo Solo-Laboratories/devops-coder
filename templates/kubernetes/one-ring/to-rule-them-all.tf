@@ -128,13 +128,13 @@ resource "coder_agent" "main" {
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
 
     # IFF true; Execute Install for k9s
-    if ${data.coder_parameter.k9s}; then
+    if ${data.coder_parameter.k9s.value}; then
       echo "K9s Addon selected..."
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/k9s.sh | sh -
     fi
 
     # IFF true; Execute Install for Coder CLI
-    if ${data.coder_parameter.coder}; then
+    if ${data.coder_parameter.coder.value}; then
       echo "Coder CLI Addon selected..."
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
     fi

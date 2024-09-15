@@ -1,4 +1,4 @@
 set -e
 
 # Install Coder
-curl -L https://coder.com/install.sh | sh
+curl -fsSL https://coder.com/install.sh | sh -s -- --stable
