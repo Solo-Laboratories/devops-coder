@@ -82,11 +82,11 @@ resource "coder_agent" "main" {
   startup_script = <<-EOT
     set -e
 
-    # Executes Coder install script 
-    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
-
     # Executes Bashrc check script
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/bashrc.sh | sh -
+
+    # Executes Coder install script 
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
 
     # Executes Coder server startup
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.92.2
