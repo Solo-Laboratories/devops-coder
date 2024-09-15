@@ -254,7 +254,7 @@ resource "kubernetes_deployment" "main" {
         }
         container {
           name              = "jumpbox"
-          image             = "docker.io/sololaboratories/k8s-jumbox:1.0.0-markus"
+          image             = "docker.io/sololaboratories/tools/k8s:jumpbox"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
@@ -275,7 +275,7 @@ resource "kubernetes_deployment" "main" {
             }
           }
           volume_mount {
-            mount_path = "/home/markus"
+            mount_path = "/home/coder"
             name       = "home"
             read_only  = false
           }
