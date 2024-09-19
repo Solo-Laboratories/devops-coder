@@ -8,6 +8,6 @@ if [ ! -f $PWD/kompose ]; then
   curl -L https://github.com/kubernetes/kompose/releases/download/v${1}/kompose-linux-amd64 -o kompose
 fi
 
-echo "Moving Kompose to /usr/local/bin..."
+echo "\nMoving Kompose to /usr/local/bin..."
 chmod +x $PWD/kompose
 sudo cp $PWD/kompose /usr/local/bin/kompose
