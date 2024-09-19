@@ -4,7 +4,7 @@ set -e
 
 # Install Kompose if not present
 if [ ! -f $PWD/kompose ]; then
-  echo "Downloading Kompose..."
+  echo "\n\nDownloading Kompose..."
   curl -L https://github.com/kubernetes/kompose/releases/download/v${1}/kompose-linux-amd64 -o kompose
 fi
 
