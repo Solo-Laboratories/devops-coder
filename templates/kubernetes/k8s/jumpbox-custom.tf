@@ -95,6 +95,9 @@ resource "coder_agent" "main" {
     # Executes k9s installation
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/k9s.sh | sh -
 
+    # Executes Kompose Installation
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/kompose.sh | sh -s -- 1.34.0
+
     # Executes Coder server startup
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.92.2
   EOT

@@ -32,7 +32,7 @@ data "coder_parameter" "image" {
   }
   option {
     name = "K8s Jumpbox"
-    value = "sololaboratories/tools/k8s:jumpbox"
+    value = "sololaboratories/k8s:jumpbox"
   }
 }
 
@@ -54,6 +54,15 @@ data "coder_parameter" "coder" {
   order       = 3
 }
 
+data "coder_parameter" "kompose" {
+  name        = "kompose"
+  type        = "bool"
+  description = "Install Kompose to convert docker compose files to kubernete files?"
+  mutable     = false
+  default     = false
+  order       = 4
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -61,7 +70,7 @@ data "coder_parameter" "cpu" {
   default      = "2"
   icon         = "/icon/memory.svg"
   mutable      = true
-  order       = 4
+  order       = 5
   option {
     name  = "2 Cores"
     value = "2"
@@ -87,7 +96,7 @@ data "coder_parameter" "memory" {
   default      = "2"
   icon         = "/icon/memory.svg"
   mutable      = true
-  order       = 5
+  order       = 6
   option {
     name  = "2 GB"
     value = "2"
@@ -114,7 +123,7 @@ data "coder_parameter" "home_disk_size" {
   type         = "number"
   icon         = "/emojis/1f4be.png"
   mutable      = false
-  order       = 6
+  order       = 7
   validation {
     min = 1
     max = 99999
@@ -137,6 +146,12 @@ resource "coder_agent" "main" {
     if ${data.coder_parameter.k9s.value}; then
       echo "K9s Addon selected..."
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/k9s.sh | sh -
+    fi
+
+    # IFF true; Execute Install for Kompose
+    if ${data.coder_parameter.k9s.value}; then
+      echo "Kompose Addon selected..."
+      curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/kompose.sh | sh -s -- 1.34.0
     fi
 
     # IFF true; Execute Install for Coder CLI
