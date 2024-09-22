@@ -149,7 +149,7 @@ resource "coder_agent" "main" {
     fi
 
     # IFF true; Execute Install for Kompose
-    if ${data.coder_parameter.k9s.value}; then
+    if ${data.coder_parameter.kompose.value}; then
       echo "Kompose Addon selected..."
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/kompose.sh | sh -s -- 1.34.0
     fi
