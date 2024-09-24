@@ -1,3 +1,12 @@
+---
+display_name: One Ring to Rule Them All
+description: Template that allows for many dynamic image and script choices.
+icon: ../../../site/static/emojis/1f9a7.png
+maintainer_github: coder
+verified: true
+tags: []
+---
+
 # One Ring to Rule Them All!
 
 This template houses the ability to select what image to use allowing for the user to switch between images. This means one could house all the works in one area and swtich between what tools to use by picking a new image to use.
