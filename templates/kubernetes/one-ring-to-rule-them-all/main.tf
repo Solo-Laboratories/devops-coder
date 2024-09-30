@@ -310,17 +310,10 @@ resource "kubernetes_deployment" "main" {
         }
       }
       spec {
-        security_context {
-          run_as_user = 1000
-          fs_group    = 1000
-        }
-        image_pull_secrets {
-          name = "regcred"
-        }
         container {
-          name              = "cpp-nouser"
+          name              = "one-ring-container"
           image             = "docker.io/${data.coder_parameter.image.value}"
-          image_pull_policy = "Always"
+          image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.main.init_script]
           security_context {
             run_as_user = "1000"
