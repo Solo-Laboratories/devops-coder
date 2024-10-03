@@ -160,6 +160,9 @@ resource "coder_agent" "main" {
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
     fi
 
+    # Executes Standard Configuration changes
+    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/config-setup.sh | sh -
+
     # Executes Coder server startup
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.92.2
   EOT
