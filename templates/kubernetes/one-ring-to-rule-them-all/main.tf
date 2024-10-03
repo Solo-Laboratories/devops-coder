@@ -36,7 +36,7 @@ data "coder_parameter" "image" {
   }
   option {
     name = "Golang 1.23.2"
-    value = "sololaboratories/k8s:1.23.2"
+    value = "sololaboratories/golang:1.23.2"
   }
   option {
     name = "Zig 2-10-2024"
