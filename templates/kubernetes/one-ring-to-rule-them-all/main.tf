@@ -42,6 +42,10 @@ data "coder_parameter" "image" {
     name = "Zig 2-10-2024"
     value = "sololaboratories/zig:2-10-2024"
   }
+  option {
+    name = "C# (Debian 12) Dotnet 8"
+    value = "sololaboratories/c-sharp:8"
+  }
 }
 
 data "coder_parameter" "k9s" {
