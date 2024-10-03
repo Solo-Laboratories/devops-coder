@@ -5,7 +5,8 @@ RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod
     && rm packages-microsoft-prod.deb
 
 RUN apt update \
-    && apt install -y --no-install-recommends dotnet-sdk-8.0 aspnetcore-runtime-8.0 mono-complete \
+    && apt install -y --no-install-recommends dotnet-sdk-8.0 aspnetcore-runtime-8.0 \
+    && apt install -y --no-install-recommends mono-complete \
     && apt clean autoclean \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/* 
