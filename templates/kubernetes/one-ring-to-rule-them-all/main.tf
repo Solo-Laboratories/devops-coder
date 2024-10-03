@@ -34,6 +34,14 @@ data "coder_parameter" "image" {
     name = "K8s Jumpbox"
     value = "sololaboratories/k8s:jumpbox"
   }
+  option {
+    name = "Golang 1.23.2"
+    value = "sololaboratories/k8s:1.23.2"
+  }
+  option {
+    name = "Zig 2-10-2024"
+    value = "sololaboratories/zig:2-10-2024"
+  }
 }
 
 data "coder_parameter" "k9s" {
