@@ -181,11 +181,6 @@ resource "coder_agent" "main" {
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.95.1
   EOT
 
-  env = {
-    CODER_USER_TOKEN = data.coder_workspace_owner.me.session_token
-    CODER_DEPLOYMENT_URL = data.coder_workspace.me.access_url
-  }
-
   # The following metadata blocks are optional. They are used to display
   # information about your workspace in the dashboard. You can remove them
   # if you don't want to display any information.
