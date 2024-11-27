@@ -169,6 +169,8 @@ resource "coder_agent" "main" {
     # IFF true; Execute Install for Coder CLI
     if ${data.coder_parameter.coder.value}; then
       echo "Coder CLI Addon selected..."
+      export CODER_USER_TOKEN=${data.coder_workspace_owner.me.session_token}
+      export CODER_DEPLOYMENT_URL=${data.coder_workspace.me.access_url}
       curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/coder.sh | sh -
     fi
 
@@ -178,6 +180,11 @@ resource "coder_agent" "main" {
     # Executes Coder server startup
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -s -- 4.95.1
   EOT
+
+  env = {
+    CODER_USER_TOKEN = data.coder_workspace_owner.me.session_token
+    CODER_DEPLOYMENT_URL = data.coder_workspace.me.access_url
+  }
 
   # The following metadata blocks are optional. They are used to display
   # information about your workspace in the dashboard. You can remove them
