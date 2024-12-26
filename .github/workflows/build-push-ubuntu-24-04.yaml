@@ -21,6 +21,6 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: dockerfiles/base/ubuntu-24-04/Dockerfile
-        tags: docker.io/sololaboratories/base:ubuntu-24-04
+        file: dockerfiles/base/ubuntu-24.04/Dockerfile
+        tags: docker.io/sololaboratories/base:ubuntu-24.04
         push: true
