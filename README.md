@@ -19,7 +19,7 @@ _Note:_ The scripts should be written with others in mind. This means there can 
 _Note:_ Not all tools are in a script and the line is ambigous so don't question why k9s is a script but helm is baked into the container itself. This will hopefully change over time.
 
 ### Dockerfiles
-As the folder name suggests, it houses all the workspace container docker files. They are built using a workflow with specific variables and pushed to our [Solo Laboratories Dockerhub](https://hub.docker.com/repositories/sololaboratories).
+As the folder name suggests, it houses all the workspace container docker files. They are built using a workflow with specific variables and pushed to our [Solo Laboratories Dockerhub](https://hub.docker.com/u/sololaboratories).
 
 This files don't really focus on small sizes as the workspaces are more like "lite" OS environments. This may change in time but right now, we install what we need and push the container as a particular version. These images are used in the templates as a "snapshot" of the tools used in the workspace.
 
