@@ -14,17 +14,13 @@ data "coder_parameter" "image" {
   type        = "string"
   description = "What container image do you want?"
   mutable     = true
-  default     = "sololaboratories/base:debian"
+  default     = "sololaboratories/base:debian-trixie"
   icon        = "/icon/container.svg"
   order       = 1
 
   option {
     name = "Debian Base"
-    value = "sololaboratories/base:debian"
-  }  
-  option {
-    name = "C++ Base (No Compiler)"
-    value = "sololaboratories/cpp:base"
+    value = "sololaboratories/base:debian-trixie"
   }  
   option {
     name = "Clang 18"
@@ -35,8 +31,12 @@ data "coder_parameter" "image" {
     value = "sololaboratories/k8s:jumpbox"
   }
   option {
-    name = "Golang 1.23.2"
-    value = "sololaboratories/golang:1.23.2"
+    name = "Golang latest"
+    value = "sololaboratories/golang:latest"
+  }
+  option {
+    name = "Golang 1.23"
+    value = "sololaboratories/golang:1.23"
   }
   option {
     name = "Zig 2-10-2024"
@@ -163,7 +163,7 @@ resource "coder_agent" "main" {
     # IFF true; Execute Install for Kompose
     if ${data.coder_parameter.kompose.value}; then
       echo "Kompose Addon selected..."
-      curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/kompose.sh | sh -s -- 1.34.0
+      curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/kompose.sh | sh -
     fi
 
     # IFF true; Execute Install for Coder CLI
