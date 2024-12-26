@@ -20,7 +20,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/build-push-action@v3
       with:
-        context: .
+        context: dockerfiles/golang/latest/Dockerfile
         file: dockerfiles/golang/latest/Dockerfile
         tags: docker.io/sololaboratories/golang:latest
         push: true
