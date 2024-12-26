@@ -24,7 +24,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/build-push-action@v3
       with:
-        context: .
+        context: dockerfiles/cpp/clang
         file: dockerfiles/cpp/clang/Dockerfile
         build-args: |
           CLANG_VERSION=${{ inputs.CLANG_VERSION }} 
