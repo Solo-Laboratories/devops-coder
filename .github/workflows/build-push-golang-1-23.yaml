@@ -28,5 +28,5 @@ jobs:
         file: dockerfiles/golang/versioned/Dockerfile
         build-args: |
           GOLANG_VERSION=${{ inputs.GOLANG_VERSION }} 
-        tags: docker.io/sololaboratories/golang:${{ inputs.GOLANG_VERSION }} 
+        tags: docker.io/sololaboratories/golang:1.23
         push: true
