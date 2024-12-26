@@ -19,9 +19,13 @@ data "coder_parameter" "image" {
   order       = 1
 
   option {
-    name = "Debian Base"
+    name = "Debian Trixie Base"
     value = "sololaboratories/base:debian-trixie"
   }  
+  option {
+    name = "Ubuntu 24.04 Base"
+    value = "sololaboratories/base:ubuntu-24.04"
+  } 
   option {
     name = "Clang 18"
     value = "sololaboratories/cpp:clang18"
@@ -37,6 +41,10 @@ data "coder_parameter" "image" {
   option {
     name = "Golang 1.23"
     value = "sololaboratories/golang:1.23"
+  }
+  option {
+    name = "Zig latest"
+    value = "sololaboratories/zig:latest"
   }
   option {
     name = "Zig 2-10-2024"
