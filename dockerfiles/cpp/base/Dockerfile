@@ -1,4 +1,4 @@
-FROM docker.io/sololaboratories/base:debian-unstable
+FROM docker.io/sololaboratories/base:debian-bookworm
 
 RUN apt update \
     && apt upgrade -y \
