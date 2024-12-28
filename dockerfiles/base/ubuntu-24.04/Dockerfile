@@ -12,8 +12,8 @@ RUN apt update \
 && rm /usr/lib/python*/EXTERNALLY-MANAGED 
 
 ARG USER=coder
-RUN usermod -u 1001 -g 1001 ubuntu \
-	&& useradd --groups sudo --no-create-home --shell /bin/bash ${USER} \
+RUN usermod -l ${USER} ubuntu \
+	&& adduser ${USER} sudo \
+	&& chsh -s /bin/bash \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
-	&& chmod 0440 /etc/sudoers.d/${USER} \
- 	&& usermod -u 1000 -g 1000 ${USER}
+	&& chmod 0440 /etc/sudoers.d/${USER}
