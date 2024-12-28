@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM debian:unstable-slim
 
 RUN apt update \
 && apt upgrade -y \
@@ -12,7 +12,6 @@ RUN apt update \
 && rm /usr/lib/python*/EXTERNALLY-MANAGED 
 
 ARG USER=coder
-# ubuntu has a user called 'ubunut' as 1000:1000 so $USER will be 1001:1001; FYI
 RUN useradd --groups sudo --no-create-home --shell /bin/bash ${USER} \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}

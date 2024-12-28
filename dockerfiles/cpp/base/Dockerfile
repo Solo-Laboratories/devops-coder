@@ -1,4 +1,4 @@
-FROM docker.io/sololaboratories/base:ubuntu-24.04
+FROM docker.io/sololaboratories/base:debian-unstable
 
 RUN apt update \
     && apt upgrade -y \
