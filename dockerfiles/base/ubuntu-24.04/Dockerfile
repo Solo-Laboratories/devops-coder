@@ -13,7 +13,6 @@ RUN apt update \
 
 ARG USER=coder
 RUN usermod -l ${USER} ubuntu \
-	&& adduser ${USER} sudo \
 	&& chsh -s /bin/bash \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}
