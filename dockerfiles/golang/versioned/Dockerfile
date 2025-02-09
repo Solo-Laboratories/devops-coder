@@ -13,4 +13,6 @@ ENV GOPATH=/home/coder/go
 ENV GOBIN=$GOPATH/bin
 ENV PATH=$PATH:$GOBIN
 
+RUN echo "export PATH=\"$PATH:/usr/local/go/bin\"" >> /etc/profile
+
 USER coder
