@@ -21,6 +21,6 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: dockerfiles/base/alpine-nix/Dockerfile
-        tags: docker.io/sololaboratories/alpine-nix:322.229.2625
+        file: dockerfiles/base/debian-nix/Dockerfile
+        tags: docker.io/sololaboratories/debian-nix:25.3.6
         push: true

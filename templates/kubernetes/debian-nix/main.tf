@@ -12,9 +12,9 @@ provider "coder" {
 data "coder_parameter" "image" {
   name        = "Container Image"
   type        = "string"
-  description = "Alpine + Nix Container"
+  description = "Debian Trixie + Nix Package Manager + Direnv Container"
   mutable     = false
-  default     = "sololaboratories/alpine-nix:322.229.2625"
+  default     = "sololaboratories/debian-nix:25.6.3"
   icon        = "/icon/container.svg"
   order       = 1
 }
@@ -281,7 +281,7 @@ resource "kubernetes_deployment" "main" {
       }
       spec {
         container {
-          name              = "alpine-nix-container"
+          name              = "debian-nix-container"
           image             = "docker.io/${data.coder_parameter.image.value}"
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.main.init_script]
