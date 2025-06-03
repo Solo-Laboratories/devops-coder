@@ -22,5 +22,5 @@ jobs:
       with:
         context: .
         file: dockerfiles/base/debian-nix/Dockerfile
-        tags: docker.io/sololaboratories/debian-nix:25.3.6
+        tags: docker.io/sololaboratories/debian-nix:25.6.3
         push: true
