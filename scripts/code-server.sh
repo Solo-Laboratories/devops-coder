@@ -2,7 +2,7 @@ set -e
 
 # $1 is code server version; for example "4.11.0"
 # Default value for VERSION 
-VAR="4.98.2" 
+VAR="4.100.2" 
 # Check if a parameter is passed 
 if [ -z "$1" ]; then 
     VERSION=$VAR 
