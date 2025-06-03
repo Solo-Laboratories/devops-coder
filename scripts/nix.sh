@@ -1,8 +1,8 @@
 set -e
 
-if command -v application_name &> /dev/null; then
+if command -v nix &> /dev/null; then
   echo "Nix Package Manager Found!"
 else
   echo "Nix Package Manager not found. Installing Nix...\n"
-  bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+  curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 fi
