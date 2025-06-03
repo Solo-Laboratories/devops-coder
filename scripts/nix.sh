@@ -13,4 +13,4 @@ if [ ! -d "/home/coder/.nix" ]; then
 fi
 
 echo "Installing or Updating Nix..."
-curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+#curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
