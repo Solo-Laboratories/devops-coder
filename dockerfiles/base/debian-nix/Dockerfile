@@ -6,7 +6,7 @@ ARG USER_GID=$USER_UID
 RUN apt update && \
     apt upgrade -y && \
     apt install -y --no-install-recommends \
-        curl sudo xz-utils git direnv ca-certificates wget lsb-release jq openssh-client software-properties-common apt-transport-https && \
+        curl sudo xz-utils git direnv ca-certificates wget lsb-release jq openssh-client apt-transport-https && \
     apt clean autoclean && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
