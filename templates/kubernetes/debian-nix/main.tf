@@ -308,7 +308,7 @@ resource "kubernetes_deployment" "main" {
             read_only  = false
           }
           volume_mount {
-            mount_path = "/nix"
+            mount_path = "/nix/store"
             name       = "shared-nix-store"
             read_only  = false
           }
