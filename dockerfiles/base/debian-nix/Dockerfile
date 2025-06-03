@@ -4,7 +4,8 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 RUN apt update && \
-    apt install -y --no-recommends curl sudo xz-utils git direnv ca-certificates
+    apt install -y --no-install-recommends \
+        curl sudo xz-utils git direnv ca-certificates
 
 RUN useradd --groups sudo --no-create-home --shell /bin/bash ${USER} \
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/${USER} \
