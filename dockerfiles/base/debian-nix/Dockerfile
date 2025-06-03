@@ -12,8 +12,5 @@ RUN useradd --groups sudo --no-create-home --shell /bin/bash ${USER} \
 	&& chmod 0440 /etc/sudoers.d/${USER}
 
 RUN echo 'eval "$(direnv hook bash)"' >> /etc/skel/.bashrc
-RUN echo 'export PATH=$PATH:/home/$USER/.nix-profile/bin:/nix/var/nix/profiles/default/bin' >> /etc/skel/.bashrc
-
-RUN curl -L https://nixos.org/nix/install | sh -s -- --daemon
 
 USER $USER
