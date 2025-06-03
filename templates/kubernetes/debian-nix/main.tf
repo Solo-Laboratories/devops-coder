@@ -101,9 +101,6 @@ resource "coder_agent" "main" {
     # Executes Standard Configuration changes
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/config-setup.sh | sh -
 
-    # Installs Nix Package Manager
-    curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/nix.sh | sh -
-
     # Executes Coder server startup
     curl -fsSL https://raw.githubusercontent.com/Solo-Laboratories/devops-coder/main/scripts/code-server.sh | sh -
   EOT
