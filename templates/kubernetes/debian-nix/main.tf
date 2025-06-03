@@ -82,7 +82,22 @@ data "coder_parameter" "home_disk_size" {
   order       = 7
   validation {
     min = 1
-    max = 99999
+    max = 64
+  }
+}
+
+data "coder_parameter" "nix_disk_size" {
+  name         = "nix_disk_size"
+  display_name = "Nix Installation disk size"
+  description  = "The size of the Nix disk in GB"
+  default      = "16"
+  type         = "number"
+  icon         = "/emojis/1f4be.png"
+  mutable      = false
+  order       = 8
+  validation {
+    min = 1
+    max = 32
   }
 }
 
@@ -138,8 +153,16 @@ resource "coder_agent" "main" {
   }
 
   metadata {
+    display_name = "Nix Disk"
+    key          = "4_nix_disk"
+    script       = "coder stat disk --path /nix"
+    interval     = 60
+    timeout      = 1
+  }
+
+  metadata {
     display_name = "CPU Usage (Host)"
-    key          = "4_cpu_usage_host"
+    key          = "5_cpu_usage_host"
     script       = "coder stat cpu --host"
     interval     = 10
     timeout      = 1
@@ -147,7 +170,7 @@ resource "coder_agent" "main" {
 
   metadata {
     display_name = "Memory Usage (Host)"
-    key          = "5_mem_usage_host"
+    key          = "6_mem_usage_host"
     script       = "coder stat mem --host"
     interval     = 10
     timeout      = 1
@@ -155,7 +178,7 @@ resource "coder_agent" "main" {
 
   metadata {
     display_name = "Load Average (Host)"
-    key          = "6_load_host"
+    key          = "7_load_host"
     # get load avg scaled by number of cores
     script   = <<EOT
       echo "`cat /proc/loadavg | awk '{ print $1 }'` `nproc`" | awk '{ printf "%0.2f", $1/$2 }'
@@ -212,10 +235,41 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "nix" {
+  metadata {
+    name      = "coder-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-nix"
+    namespace = "coder"
+    labels = {
+      "app.kubernetes.io/name"     = "coder-pvc"
+      "app.kubernetes.io/instance" = "coder-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      //Coder-specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+  wait_until_bound = false
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "${data.coder_parameter.nix_disk_size.value}Gi"
+      }
+    }
+  }
+}
+
 resource "kubernetes_deployment" "main" {
   count = data.coder_workspace.me.start_count
   depends_on = [
-    kubernetes_persistent_volume_claim.home
+    kubernetes_persistent_volume_claim.home,
+    kubernetes_persistent_volume_claim.nix
   ]
   wait_for_rollout = false
   metadata {
@@ -281,12 +335,25 @@ resource "kubernetes_deployment" "main" {
             name       = "home"
             read_only  = false
           }
+          volume_mount {
+            mount_path = "/nix"
+            name       = "nix"
+            read_only  = false
+          }
         }
 
         volume {
           name = "home"
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
+            read_only  = false
+          }
+        }
+
+        volume {
+          name = "nix"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.nix.metadata.0.name
             read_only  = false
           }
         }
