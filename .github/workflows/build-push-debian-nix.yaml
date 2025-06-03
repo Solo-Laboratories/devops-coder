@@ -1,4 +1,4 @@
-name: Build and Push Alpine 3.22 Base Image
+name: Build and Push Debian Trixie + Nix + Direnv Base Image
 
 on:
   workflow_dispatch:
